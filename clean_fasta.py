@@ -6,7 +6,7 @@ def Clean(fasta, outfile, min_len=None, max_len=None):
     min_len=min_len if min_len is not None else 0
     max_len=max_len if max_len is not None else math.inf
     seqs={}
-    for rec in SeqIO.parse('pfam_unique.fasta',format='fasta'):
+    for rec in SeqIO.parse(fasta,format='fasta'):
         length=len(rec.seq)
         if 'X' in rec.seq or 'B' in rec.seq or (length<min_len or length>max_len):
             continue
@@ -15,7 +15,7 @@ def Clean(fasta, outfile, min_len=None, max_len=None):
         seqs[id]=str(rec.seq)
 
     # SeqIO.write(seqs, 'pfam_unique_filtered.fasta', format='fasta')
-    with open('pfam_unique_filtered.fasta', 'w') as f:
+    with open(outfile, 'w') as f:
         for id, seq in seqs.items():
             print(f'>{id}', file=f)
             print(seq, file=f)
